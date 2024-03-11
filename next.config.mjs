@@ -4,9 +4,7 @@ const isProduction = 'production' === process.env.NODE_ENV
 const nextConfig = {
     assetPrefix: isProduction ? '/bon-de-commande' : '',
     output: 'export',
-    experimental: {
-        images: { unoptimized: true }
-    }
+    images: { unoptimized: true }
 };
 
 export default nextConfig;
