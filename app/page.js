@@ -10,7 +10,7 @@ function bloc(item, field) {
   const ft = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' })
   return (<tr key={item.id}>
     <td>{item.fields[field]}</td>
-    {Qualite(item.fields.Qualite)}
+    {Qualite(item.fields.Qualite || [])}
     <td className="number">{ft.format(item.fields.Prix*1.1)}</td>
     <td className="number">{ft.format(item.fields.Prix*0.9)}</td>
     <td className="number">{ft.format(item.fields.Prix*0.5)}</td>
@@ -22,12 +22,13 @@ function bloc(item, field) {
 
 export default function Home() {
   const [data, setData] = useState([])
-  const [field, setField] = useState("Produit")
+  const [field, setField] = useState("Francais")
 
   useEffect(() => {
     fetch('https://vrac.getgrist.com/api/docs/2BPFJwZHF8Nq/tables/Produits/records')
       .then(r => r.json())
       .then(r => r.records)
+      .then(r => r.filter(i => i.fields.Categorie === "produit"))
       .then(setData)
   }, [])
   return (
@@ -53,7 +54,7 @@ export default function Home() {
         />
       </header>
       <select onChange={e => setField(e.target.value)}>
-        <option value="Produit">Français</option>
+        <option value="Francais">Français</option>
         <option value="Russe">Russe</option>
       </select>
       <table>
