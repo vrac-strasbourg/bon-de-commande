@@ -42,13 +42,14 @@ export default function Home() {
             <li>Nom :</li>
             <li>Prénom :</li>
             <li>Email / téléphone :</li>
-            <li>Groupement d'achat :</li>
+            <li>Groupement d’achat :</li>
           </ul>
           </div>
         <Image
           src={logo}
           height={100}
           priority
+          alt="Logo de Vrac Strasbourg"
         />
       </header>
       <select onChange={e => setField(e.target.value)}>
