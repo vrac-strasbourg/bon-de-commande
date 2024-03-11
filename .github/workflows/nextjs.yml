@@ -51,7 +51,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build and export statically with Next.js
-        run: npm next build
+        run: npm run build
       - name: Show
         run: ls -al
       - name: Upload artifact
