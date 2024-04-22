@@ -3,17 +3,17 @@
 import Image from "next/image";
 import { useState, useEffect } from 'react';
 import styles from "./page.module.css";
-import Qualite from "./qualite.js";
+import Qualite, {QualiteImage, map as QualiteMap} from "./qualite.js";
 import logo from '../public/logo.jpg';
 
 function bloc(item, field) {
   const ft = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' })
   return (<tr key={item.id}>
-    <td>{item.fields[field]}</td>
-    {Qualite(item.fields.Qualite || [])}
-    <td className="number">{ft.format(item.fields.Prix*1.1)}</td>
-    <td className="number">{ft.format(item.fields.Prix*0.9)}</td>
-    <td className="number">{ft.format(item.fields.Prix*0.5)}</td>
+    <td>{item.fields.Nom}</td>
+    {Qualite({qualites: item.fields.Qualite || []})}
+    <td className="number">{ft.format(item.fields.prix_TTC*1.1)}</td>
+    <td className="number">{ft.format(item.fields.prix_TTC*0.9)}</td>
+    <td className="number">{ft.format(item.fields.prix_TTC*0.5)}</td>
     <td></td>
     <td>{item.fields.Unite}</td>
     <td></td>
@@ -21,15 +21,24 @@ function bloc(item, field) {
 }
 
 export default function Home() {
-  const [data, setData] = useState([])
+  const [products, setProducts] = useState([])
+  const [texts, setTexts] = useState([])
   const [field, setField] = useState("Francais")
 
   useEffect(() => {
-    fetch('https://vrac.getgrist.com/api/docs/2BPFJwZHF8Nq/tables/Produits/records')
+    fetch('https://vrac.getgrist.com/api/docs/2BPFJwZHF8Nq/tables/Produits/records?filter={"actif": [true]}')
       .then(r => r.json())
       .then(r => r.records)
-      .then(r => r.filter(i => i.fields.Categorie === "produit"))
-      .then(setData)
+      .then(setProducts)
+    fetch('https://vrac.getgrist.com/api/docs/2BPFJwZHF8Nq/tables/Textes/records')
+      .then(r => r.json())
+      .then(r => r.records)
+      .then(texts => {
+        return texts.reduce((result, value) => {
+          result[value.fields.cle] = value.fields
+          return result
+        }, {})
+      }).then(setTexts)
   }, [])
   return (
     <main className={styles.main}>
@@ -71,12 +80,35 @@ export default function Home() {
         </tr>
       </thead>
       <tbody>
-        {data.map(i => bloc(i,field))}
+        {products.map(i => bloc(i,field))}
       </tbody>
-  {/*        {data.records.map(bloc)}
-        {data.records.map(bloc)}
-        {data.records.map(bloc)}*/}
       </table>
+      <footer>
+        <div className="qualites">
+        {Object.keys(QualiteMap).map(qualite => <div key={qualite}>{QualiteImage(qualite)}{texts?.[qualite]?.[field]}</div>)}
+        </div>
+        <p>{texts?.explications?.[field]}</p>
+        <h1>{texts?.tarifs?.[field]}</h1>
+        <h2>{texts?.contact?.[field]}</h2>
+        <div>
+          <div>
+            {texts?.antenne?.[field]} Port du Rhin, Neuhof, Koenigshoffen, PARENCHchantement :
+            07 81 62 94 49 zoe-strasbourg@vrac-asso.org
+          </div>
+          <div>
+            {texts?.antenne?.[field]} Illkirch Ampère-Musau, Montagne Verte :
+            07 86 92 82 81 lea-strasbourg@vrac-asso.org
+          </div>
+          <div>
+            {texts?.antenne?.[field]} Hautepierre, Cité Spach :
+            07 66 67 95 66 alice-strasbourg@vrac-asso.org
+          </div>
+          <div>
+            {texts?.antenne?.[field]} Recyclerie by AMITEL ({texts?.étudiants?.[field]}) :
+            07 68 57 13 33 julianne-strasbourg@vrac-asso.org
+            </div>
+        </div>
+      </footer>
     </main>
   );
 }

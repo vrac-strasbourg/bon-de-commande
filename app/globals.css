@@ -103,12 +103,24 @@ tr:nth-child(odd),
 tr:nth-child(odd)>td,
 tr:nth-child(odd)>th {
   background: #ece8db;
-  border-radius: 20px;
 }
 
 body{
   -webkit-print-color-adjust:exact !important;
   print-color-adjust:exact !important;
+}
+
+body {
+  font-size: 79.5%;
+}
+
+@media print {
+  @page {
+    margin: 0.5cm;
+ }
+ html, body {
+  width: 100%;
+ }
 }
 
 th {
@@ -123,6 +135,16 @@ header {
   display: flex;
   justify-content: space-between;
 }
-table, tr, th, td {
-  border-radius: 30px;
+
+.qualites {
+  padding: 1em;
+  display: flex;
+  font-size: 120%;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: auto;
+}
+
+.qualites > * {
+  min-width: 40%;
 }

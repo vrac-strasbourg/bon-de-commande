@@ -6,15 +6,15 @@ import bio from '../public/bio.png';
 import équitable from '../public/equitable.png';
 
 
-const map = {
+export const map = {
     local,
-    vrac,
     bio,
+    vrac,
     équitable
 }
 
-export default function Qualite(props) {
-    const p = props.filter(i=> map[i])
+export default function Qualite({qualites}) {
+    const p = qualites.filter(i=> map[i])
     return (<td>
         {
             p.map(i => {
@@ -26,4 +26,13 @@ export default function Qualite(props) {
                 />
         })}
     </td>)
+}
+
+export function QualiteImage(qualite) {
+    return (<Image
+      src={map[qualite]}
+      alt={qualite}
+      height={25}
+      priority
+    />)
 }
