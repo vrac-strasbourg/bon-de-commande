@@ -14,14 +14,14 @@ export const map = {
 export default function Qualite({ qualites }) {
   const p = qualites.filter((i) => map[i]);
   return (
-    <td>
+    <td className="qualites">
       {p.map((i) => {
-        return <Image key={i} src={map[i]} alt={i} height={25} priority />;
+        return <Image key={i} src={map[i]} alt={i} height={20} priority />;
       })}
     </td>
   );
 }
 
 export function QualiteImage(qualite) {
-  return <Image src={map[qualite]} alt={qualite} height={25} priority />;
+  return <Image src={map[qualite]} alt={qualite} height={20} priority />;
 }
