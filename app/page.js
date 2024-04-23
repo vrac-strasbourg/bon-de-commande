@@ -30,15 +30,15 @@ export default function Home() {
   const [texts, setTexts] = useState([]);
   const [config, setConfig] = useState();
   const fallback = "Francais";
-  const [field, setField] = useState(fallback);
+  const [lang, setLang] = useState(fallback);
 
   const tp = (product) => {
-    const v = product.fields[field];
+    const v = product.fields[lang];
     return v?.length ? v : product.fields[fallback];
   };
 
   const t = (prop) => {
-    const v = texts?.[prop]?.[field];
+    const v = texts?.[prop]?.[lang];
     return v?.length ? v : texts?.[prop]?.[fallback];
   };
 
@@ -88,7 +88,7 @@ export default function Home() {
         </div>
         <Image src={logo} height={100} priority alt="Logo de Vrac Strasbourg" />
       </header>
-      <select onChange={(e) => setField(e.target.value)}>
+      <select onChange={(e) => setLang(e.target.value)}>
         <option value="Francais">Français</option>
         <option value="Russe">Russe</option>
       </select>
