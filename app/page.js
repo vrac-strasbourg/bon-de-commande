@@ -67,10 +67,12 @@ export default function Home() {
           </h1>
 
           <ul>
-            <li>Nom :</li>
-            <li>Prénom :</li>
-            <li>Email / téléphone :</li>
-            <li>Groupement d’achat :</li>
+            <li>{texts?.nom?.[field]} :</li>
+            <li>{texts?.prénom?.[field]} :</li>
+            <li>
+              {texts?.email?.[field]} / {texts?.téléphone?.[field]} :
+            </li>
+            <li>{texts?.groupement?.[field]} :</li>
           </ul>
         </div>
         <Image src={logo} height={100} priority alt="Logo de Vrac Strasbourg" />
