@@ -115,16 +115,17 @@ body {
 }
 
 body {
-  font-size: var(--print-font-size);
   max-width: 680px;
   margin: auto;
 }
 
 @media print {
-  select {
-    display: none;
+  body {
+    font-size: var(--print-font-size);
   }
-  @page {
+  select,
+  .print-sizer {
+    display: none !important;
   }
 }
 
@@ -167,4 +168,13 @@ footer {
 .contacts {
   text-indent: -3em;
   margin-left: 3em;
+}
+
+.print-sizer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ps-action {
+  flex-grow: 2;
 }

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import styles from "./page.module.css";
 import Qualite, { QualiteImage, map as QualiteMap } from "./qualite.js";
+import PrintSizer from "./print-sizer.jsx";
 import logo from "../public/logo.jpg";
 
 function bloc(item, tp, t) {
@@ -69,6 +70,7 @@ export default function Home() {
       })
       .then(setTexts);
   }, []);
+
   return Object.keys(texts).length ? (
     <main className={styles.main}>
       <header>
@@ -92,6 +94,7 @@ export default function Home() {
         <option value="Francais">Français</option>
         <option value="Russe">Russe</option>
       </select>
+      <PrintSizer lang={lang} />
       <table>
         <thead>
           <tr>
