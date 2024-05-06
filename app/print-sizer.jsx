@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 export default function PrintSizer(props) {
-  const defaultMin = 0.5;
+  const defaultMin = 0.48;
   const defaultMax = 1.25;
   const [min, setMin] = useState(defaultMin);
   const [max, setMax] = useState(defaultMax);
