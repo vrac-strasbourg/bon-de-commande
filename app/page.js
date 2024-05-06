@@ -31,15 +31,16 @@ export default function Home() {
   const [texts, setTexts] = useState([]);
   const [config, setConfig] = useState();
   const fallback = "Francais";
-  const [lang, setLang] = useState(fallback);
+  const [langs, setLangs] = useState([]);
+  const [currentLang, setCurrentLang] = useState(fallback);
 
   const tp = (product) => {
-    const v = product.fields[lang];
+    const v = product.fields[currentLang];
     return v?.length ? v : product.fields[fallback];
   };
 
   const t = (prop) => {
-    const v = texts?.[prop]?.[lang];
+    const v = texts?.[prop]?.[currentLang];
     return v?.length ? v : texts?.[prop]?.[fallback];
   };
 
@@ -57,6 +58,12 @@ export default function Home() {
       .then((r) => r.records)
       .then((r) => r[0].fields)
       .then(setConfig);
+    fetch(
+      "https://vrac.getgrist.com/api/docs/2BPFJwZHF8Nq/tables/Langues/records?sort=Nom",
+    )
+      .then((r) => r.json())
+      .then((r) => r.records)
+      .then(setLangs);
     fetch(
       "https://vrac.getgrist.com/api/docs/2BPFJwZHF8Nq/tables/Textes/records",
     )
@@ -90,19 +97,30 @@ export default function Home() {
         </div>
         <Image src={logo} height={100} priority alt="Logo de Vrac Strasbourg" />
       </header>
-      <select onChange={(e) => setLang(e.target.value)}>
-        <option value="Francais">Français</option>
-        <option value="Russe">Russe</option>
+      <select
+        value={currentLang}
+        onChange={(e) => setCurrentLang(e.target.value)}
+      >
+        {langs.map((lang) => {
+          return (
+            <option
+              key={lang.fields.Nom_informatique}
+              value={lang.fields.Nom_informatique}
+            >
+              {lang.fields.Nom}
+            </option>
+          );
+        })}
       </select>
-      <PrintSizer lang={lang} />
+      <PrintSizer lang={currentLang} />
       <table>
         <thead>
           <tr>
             <th>{t("produit")}</th>
             <th>{t("qualité")}</th>
-            <th>{`${t("tarif")} ${t("bleu")} (+10%)`}</th>
-            <th>{`${t("tarif")} ${t("vert")} (-10%)`}</th>
-            <th>{`${t("tarif")} ${t("rose")} (-50%)`}</th>
+            <th>{`${t("tarif")} ${t("bleu")} (+10%)`}</th>
+            <th>{`${t("tarif")} ${t("vert")} (-10%)`}</th>
+            <th>{`${t("tarif")} ${t("rose")} (-50%)`}</th>
             <th>{t("quantité")}</th>
             <th>{t("unité")}</th>
             <th>{t("montant")}</th>
