@@ -115,13 +115,17 @@ body {
 }
 
 body {
-  max-width: 680px;
+  max-width: 780px;
   margin: auto;
 }
 
 @media print {
   body {
     font-size: var(--print-font-size);
+    margin: 0mm;
+  }
+  @page {
+    margin: 9mm;
   }
   select,
   .print-sizer {
