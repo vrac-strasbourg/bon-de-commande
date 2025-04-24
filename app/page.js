@@ -16,9 +16,10 @@ function bloc(item, tp, t) {
     <tr key={item.id}>
       <td>{tp(item)}</td>
       {Qualite({ qualites: item.fields.Qualite || [] })}
-      <td className="number">{ft.format(item.fields.prix_TTC * 1.1)}</td>
-      <td className="number">{ft.format(item.fields.prix_TTC * 0.9)}</td>
-      <td className="number">{ft.format(item.fields.prix_TTC * 0.5)}</td>
+      <td className="number">{item.fields.Tarification == "triple" ? ft.format(item.fields.prix_TTC * 1.1) : ""}</td>
+      <td className="number">{item.fields.Tarification == "triple" ? ft.format(item.fields.prix_TTC * 0.9) : ""}</td>
+      <td className="number">{item.fields.Tarification == "triple" ? ft.format(item.fields.prix_TTC * 0.5) : ""}</td>
+      <td className="number">{item.fields.Tarification == "coûtant" ? ft.format(item.fields.prix_TTC) : ""}</td>
       <td></td>
       <td>{t(item.fields.unit)}</td>
       <td></td>
@@ -121,6 +122,7 @@ export default function Home() {
             <th>{`${t("tarif")} ${t("bleu")} (+10%)`}</th>
             <th>{`${t("tarif")} ${t("vert")} (-10%)`}</th>
             <th>{`${t("tarif")} ${t("rose")} (-50%)`}</th>
+            <th>{`${t("tarif")} ${t("coutant")}`}</th>
             <th>{t("quantité")}</th>
             <th>{t("unité")}</th>
             <th>{t("montant")}</th>
