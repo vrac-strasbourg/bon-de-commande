@@ -46,7 +46,7 @@ export default function Home() {
 
   useEffect(() => {
     fetch(
-      'https://vrac.getgrist.com/api/docs/2BPFJwZHF8Nq/tables/Produits/records?sort=Categorie,Nom&filter={"actif": [true]}',
+      'https://vrac.getgrist.com/api/docs/2BPFJwZHF8Nq/tables/Produits/records?sort=Categorie,Nom',
     )
       .then((r) => r.json())
       .then((r) => r.records)
