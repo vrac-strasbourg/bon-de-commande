@@ -68,9 +68,12 @@ export default function Importation() {
     </ul>
 
     <div><label htmlFor="files">Une fois tous les fichiers exportés de lʼépicerie, les sélectionner tous dʼun coup (ctrl+clic ou shift)</label></div>
-    <input id="files" type="file" multiple onChange={onChangeFiles}/>
+    <input id="files" type="file" accept="text/csv" multiple onChange={onChangeFiles}/>
     {tarifications.length ? <table>
-      <thead><tr><th>Triple</th><th>Coûtant</th><th>Fichier</th></tr></thead>
+      <thead>
+        <tr><th colspan="2">Tarification</th></tr>
+        <tr><th>Triple</th><th>Coûtant</th><th>Fichier</th></tr>
+      </thead>
       <tbody>{
         tarifications.map((t, i) => <tr key={t.name}>
           <td><input name={`tarif_${i}`} type="radio"
